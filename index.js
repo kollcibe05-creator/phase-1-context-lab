@@ -17,14 +17,6 @@
     record.payPerHour = array[3]
     record.timeInEvents = []
     record.timeOutEvents = []
-
-
-    record.createTimeInEvent = createTimeInEvent;
-    record.createTimeOutEvent = createTimeOutEvent;
-    record.hoursWorkedOnDate = hoursWorkedOnDate;
-    record.wagesEarnedOnDate = wagesEarnedOnDate;
-    record.allWagesFor = allWagesFor;
-
     
     return record
  }
@@ -72,7 +64,6 @@ const allWagesFor = function () {
     })
 
     const payable = eligibleDates.reduce(function (memo, d) {
-        // return memo + wagesEarnedOnDate.call(this, d)
         return memo + wagesEarnedOnDate.call(this, d)
 
     }.bind(this), 0) // <== Hm, why did we need to add bind() there? We'll discuss soon!
@@ -82,7 +73,7 @@ const allWagesFor = function () {
 
 function calculatePayroll(arrayOfEmployeeRecords) {
   return arrayOfEmployeeRecords.reduce((total, employee) => {
-    return total + employee.allWagesFor();
+    return total + allWagesFor.call(employee);
   }, 0);
 }
 
